@@ -70,6 +70,7 @@
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
     "tsd": "^0.13.1",
+    "utility-types": "^3.10.0",
     "workq": "^2.1.0",
     "xmlbuilder2": "^2.1.2"
   },

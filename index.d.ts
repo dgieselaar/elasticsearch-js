@@ -49,6 +49,7 @@ import Serializer from './lib/Serializer';
 import Helpers from './lib/Helpers';
 import * as RequestParams from './api/requestParams';
 import * as errors from './lib/errors';
+import { SearchApiResponse } from './test/types/search-api-response';
 
 declare type callbackFn<TResponse, TContext> = (err: ApiError, result: ApiResponse<TResponse, TContext>) => void;
 

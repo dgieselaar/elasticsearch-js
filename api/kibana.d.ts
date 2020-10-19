@@ -29,7 +29,7 @@ import {
   ResurrectEvent,
   ApiError
 } from '../index'
-import Helpers from '../lib/Helpers'
+import Helpers, { SearchResponse } from '../lib/Helpers'
 import {
   ApiResponse,
   RequestBody,
@@ -39,7 +39,8 @@ import {
   TransportRequestPromise,
   Context
 } from '../lib/Transport'
-import * as RequestParams from './requestParams'
+import { SearchApiResponse, SearchRequestBody } from '../test/types/search-api-response';
+import * as RequestParams from './requestParams';
 
 // Extend API
 interface ClientExtendsCallbackOptions {
@@ -375,7 +376,12 @@ interface KibanaClient {
   }
   scriptsPainlessExecute<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ScriptsPainlessExecute<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   scroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Scroll<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Search<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  search<TDocument, TRequestBody extends SearchRequestBody = SearchRequestBody, TContext = Context>(params?: RequestParams.Search<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<
+    ApiResponse<
+      SearchResponse<TDocument> & SearchApiResponse<TRequestBody, TDocument>,
+      TContext
+    >
+  >
   searchShards<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchShards, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   searchableSnapshots: {

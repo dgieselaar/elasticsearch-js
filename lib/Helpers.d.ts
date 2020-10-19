@@ -120,3 +120,47 @@ export interface MsearchHelper extends Promise<void> {
   search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(header: Omit<Search, 'body'>, body: TRequestBody): Promise<ApiResponse<TResponse, TContext>>
   search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(header: Omit<Search, 'body'>, body: TRequestBody, callback: callbackFn<TResponse, TContext>): void
 }
+
+
+// from Kibana: src/core/server/saved_objects/migrations/core/elastic_index.ts
+
+export interface SearchResponse<T = unknown> {
+  took: number;
+  timed_out: boolean;
+  _scroll_id?: string;
+  _shards: ShardsResponse;
+  hits: {
+    total: {
+      value: number;
+      relation: 'gte' | 'eq';
+    };
+    max_score: number;
+    hits: Array<{
+      _index: string;
+      _type: string;
+      _id: string;
+      _score: number;
+      _source: T;
+      _version?: number;
+      _explanation?: Explanation;
+      fields?: any;
+      highlight?: any;
+      inner_hits?: any;
+      matched_queries?: string[];
+      sort?: string[];
+    }>;
+  };
+}
+
+interface ShardsResponse {
+  total: number;
+  successful: number;
+  failed: number;
+  skipped: number;
+}
+
+interface Explanation {
+  value: number;
+  description: string;
+  details: Explanation[];
+}
